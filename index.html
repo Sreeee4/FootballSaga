@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Football Saga - Premium Turf Booking in Mumbai</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            scroll-behavior: smooth;
+        }
+        
+        .turf-card:hover {
+            transform: translateY(-5px);
+        }
+
+        /* Custom scrollbar for booking slots */
+        .slots-container::-webkit-scrollbar {
+            width: 6px;
+        }
+        .slots-container::-webkit-scrollbar-track {
+            background: #374151; 
+        }
+        .slots-container::-webkit-scrollbar-thumb {
+            background: #f97316; 
+            border-radius: 3px;
+        }
+        .slots-container::-webkit-scrollbar-thumb:hover {
+            background: #ea580c; 
+        }
+        
+        /* Dark mode overrides for select dropdown arrow */
+        select {
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%239ca3af' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+            background-position: right 0.5rem center;
+            background-repeat: no-repeat;
+            background-size: 1.5em 1.5em;
+            padding-right: 2.5rem;
+            -webkit-appearance: none;
+            appearance: none;
+        }
+    </style>
+</head>
+<body class="bg-black text-gray-100">
+
+    <!-- Navbar -->
+    <nav class="bg-black/90 backdrop-blur-md border-b border-orange-900/50 text-white shadow-lg sticky top-0 z-50">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="flex items-center space-x-2 cursor-pointer" onclick="showMainView()">
+                <i class="fas fa-futbol text-2xl text-orange-500"></i>
+                <span class="text-2xl font-bold tracking-wider">Football <span class="text-orange-500">Saga</span></span>
+            </div>
+            <div class="hidden md:flex space-x-8">
+                <a href="javascript:void(0)" onclick="showMainView()" class="hover:text-orange-400 transition">Home</a>
+                <a href="#turfs" onclick="showMainView(); setTimeout(() => scrollToTurfs(), 100)" class="hover:text-orange-400 transition">Find Turfs</a>
+                <a href="#about" onclick="showMainView(); setTimeout(() => document.getElementById('about').scrollIntoView(), 100)" class="hover:text-orange-400 transition">About</a>
+                <a href="#contact" onclick="showMainView(); setTimeout(() => document.getElementById('contact').scrollIntoView(), 100)" class="hover:text-orange-400 transition">Contact</a>
+            </div>
+            <button onclick="showMainView(); setTimeout(() => scrollToTurfs(), 100)" class="bg-orange-600 text-white px-5 py-2 rounded-full font-bold hover:bg-orange-500 transition shadow-lg shadow-orange-900/20 cursor-pointer">
+                Book Now
+            </button>
+            <!-- Mobile Menu Button -->
+            <button class="md:hidden text-white focus:outline-none" onclick="document.getElementById('mobile-menu').classList.toggle('hidden')">
+                <i class="fas fa-bars text-2xl"></i>
+            </button>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-gray-900 border-t border-gray-800 px-6 py-4">
+            <a href="javascript:void(0)" onclick="showMainView()" class="block py-2 hover:text-orange-400">Home</a>
+            <a href="#turfs" onclick="showMainView()" class="block py-2 hover:text-orange-400">Find Turfs</a>
+            <a href="#about" onclick="showMainView()" class="block py-2 hover:text-orange-400">About</a>
+            <a href="#contact" onclick="showMainView()" class="block py-2 hover:text-orange-400">Contact</a>
+        </div>
+    </nav>
+
+    <!-- Main Content Wrapper -->
+    <div id="main-view">
+
+        <!-- Hero Section -->
+        <section id="home" class="relative bg-gray-900 text-white h-[85vh] flex items-center justify-center overflow-hidden">
+            <!-- Overlay Image -->
+            <div class="absolute inset-0 opacity-50 bg-[url('https://images.unsplash.com/photo-1529900748604-07564a03e7a6?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80')] bg-cover bg-center"></div>
+            <div class="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent"></div>
+            
+            <div class="container mx-auto px-6 relative z-10 text-center">
+                <h1 class="text-5xl md:text-7xl font-bold mb-6 leading-tight drop-shadow-lg">Welcome to <br> <span class="text-orange-500">Football Saga</span></h1>
+                <p class="text-xl md:text-2xl mb-10 text-gray-200 max-w-2xl mx-auto drop-shadow-md">Your ultimate destination for premium turf booking in Mumbai. Experience the game like never before.</p>
+                <div class="flex flex-col md:flex-row justify-center gap-4">
+                    <button onclick="scrollToTurfs()" class="cursor-pointer bg-orange-600 hover:bg-orange-500 text-white px-8 py-4 rounded-lg font-bold text-lg transition shadow-lg shadow-orange-900/50 flex items-center justify-center gap-2">
+                        <i class="fas fa-search-location"></i> Find Turfs Nearby
+                    </button>
+                    <a href="#about" class="cursor-pointer bg-transparent border-2 border-white hover:bg-white hover:text-orange-600 text-white px-8 py-4 rounded-lg font-bold text-lg transition shadow-lg flex items-center justify-center">
+                        Learn More
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Search & Filter Section -->
+        <section class="py-10 bg-gray-900 shadow-xl border border-gray-800 relative -mt-10 mx-4 md:mx-20 rounded-xl z-20">
+            <div class="container mx-auto px-6">
+                <div class="flex flex-col md:flex-row gap-4 items-center justify-between">
+                    <div class="w-full md:w-1/3">
+                        <label class="block text-gray-400 text-sm font-bold mb-2" for="location">Location</label>
+                        <div class="relative">
+                            <select id="locationFilter" class="block w-full bg-gray-800 border border-gray-700 text-gray-200 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-gray-700 focus:border-orange-500 transition-colors">
+                                <option value="all">All Mumbai</option>
+                                <option value="Bandra">Bandra</option>
+                                <option value="Andheri">Andheri</option>
+                                <option value="Dadar">Dadar</option>
+                                <option value="Powai">Powai</option>
+                                <option value="Juhu">Juhu</option>
+                                <option value="Colaba">Colaba</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="w-full md:w-1/3">
+                        <label class="block text-gray-400 text-sm font-bold mb-2" for="sport">Sport</label>
+                        <div class="relative">
+                            <select id="sportFilter" class="block w-full bg-gray-800 border border-gray-700 text-gray-200 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-gray-700 focus:border-orange-500 transition-colors">
+                                <option value="all">All Sports</option>
+                                <option value="Football">Football</option>
+                                <option value="Cricket">Cricket</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="w-full md:w-1/3 pt-6">
+                        <button onclick="filterTurfs()" class="cursor-pointer w-full bg-orange-600 hover:bg-orange-500 text-white font-bold py-3 px-4 rounded focus:outline-none focus:shadow-outline transition shadow-lg shadow-orange-900/30">
+                            Search Turfs
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Turf Listing Section -->
+        <section id="turfs" class="py-20 bg-black">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl md:text-5xl font-bold text-white mb-4">Top Rated Turfs</h2>
+                    <div class="w-24 h-1 bg-orange-500 mx-auto rounded"></div>
+                    <p class="mt-4 text-gray-400">Find the perfect ground for your next match.</p>
+                </div>
+                
+                <div id="turf-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Turf cards will be injected here by JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="py-20 bg-gray-900 border-t border-gray-800">
+            <div class="container mx-auto px-6">
+                <div class="flex flex-col md:flex-row items-center gap-12">
+                    <div class="w-full md:w-1/2">
+                        <div class="relative">
+                            <div class="absolute -inset-2 bg-orange-500 rounded-lg opacity-20 blur-lg"></div>
+                            <img src="IMG_9315.JPG" alt="About Football Saga" class="relative rounded-lg shadow-2xl w-full border border-gray-700">
+                        </div>
+                    </div>
+                    <div class="w-full md:w-1/2">
+                        <h2 class="text-3xl md:text-4xl font-bold text-white mb-6">Why Choose <span class="text-orange-500">Football Saga</span>?</h2>
+                        <p class="text-gray-400 mb-8 leading-relaxed text-lg">
+                            At Football Saga, we believe that every player deserves a professional playing experience. Whether you're a weekend warrior or an aspiring pro, finding the right turf shouldn't be a hassle.
+                        </p>
+                        <ul class="space-y-4">
+                            <li class="flex items-center">
+                                <span class="bg-gray-800 text-orange-500 p-3 rounded-full mr-4 border border-gray-700"><i class="fas fa-bolt"></i></span>
+                                <span class="text-gray-300">Real-time availability updates</span>
+                            </li>
+                            <li class="flex items-center">
+                                <span class="bg-gray-800 text-orange-500 p-3 rounded-full mr-4 border border-gray-700"><i class="fas fa-star"></i></span>
+                                <span class="text-gray-300">Premium quality FIFA-standard turfs</span>
+                            </li>
+                            <li class="flex items-center">
+                                <span class="bg-gray-800 text-orange-500 p-3 rounded-full mr-4 border border-gray-700"><i class="fas fa-mobile-alt"></i></span>
+                                <span class="text-gray-300">Seamless booking process with instant confirmation</span>
+                            </li>
+                            <li class="flex items-center">
+                                <span class="bg-gray-800 text-orange-500 p-3 rounded-full mr-4 border border-gray-700"><i class="fas fa-map-marked-alt"></i></span>
+                                <span class="text-gray-300">Located in prime areas across Mumbai</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="py-20 bg-black border-t border-gray-800">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-4">Get In Touch</h2>
+                    <div class="w-20 h-1 bg-orange-500 mx-auto rounded"></div>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                    <div>
+                        <h3 class="text-2xl font-bold mb-8 text-orange-500">Contact Information</h3>
+                        <div class="space-y-8">
+                            <div class="flex items-start">
+                                <div class="bg-gray-900 p-4 rounded-lg text-orange-500 mr-5 border border-gray-800">
+                                    <i class="fas fa-map-marker-alt text-xl"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-lg mb-1">Headquarters</h4>
+                                    <p class="text-gray-400">Near 247 Embassy, LBS Marg, Vikhroli(w),<br>Mumbai, Maharashtra 400083</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <div class="bg-gray-900 p-4 rounded-lg text-orange-500 mr-5 border border-gray-800">
+                                    <i class="fas fa-phone text-xl"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-lg mb-1">Phone</h4>
+                                    <p class="text-gray-400">+91 95946 77284</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <div class="bg-gray-900 p-4 rounded-lg text-orange-500 mr-5 border border-gray-800">
+                                    <i class="fas fa-envelope text-xl"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-lg mb-1">Email</h4>
+                                    <p class="text-gray-400">support@footballsaga.com</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-gray-900 p-8 rounded-xl shadow-lg border border-gray-800">
+                        <form onsubmit="event.preventDefault(); alert('Message sent! We will contact you shortly.');">
+                            <div class="mb-6">
+                                <label class="block text-sm font-bold mb-2 text-gray-300">Name</label>
+                                <input type="text" class="w-full bg-black border border-gray-700 rounded-lg py-3 px-4 text-white focus:outline-none focus:border-orange-500 transition-colors" placeholder="Your Name">
+                            </div>
+                            <div class="mb-6">
+                                <label class="block text-sm font-bold mb-2 text-gray-300">Email</label>
+                                <input type="email" class="w-full bg-black border border-gray-700 rounded-lg py-3 px-4 text-white focus:outline-none focus:border-orange-500 transition-colors" placeholder="your@email.com">
+                            </div>
+                            <div class="mb-8">
+                                <label class="block text-sm font-bold mb-2 text-gray-300">Message</label>
+                                <textarea class="w-full bg-black border border-gray-700 rounded-lg py-3 px-4 text-white focus:outline-none focus:border-orange-500 h-32 transition-colors" placeholder="How can we help?"></textarea>
+                            </div>
+                            <button class="w-full bg-orange-600 hover:bg-orange-500 text-white font-bold py-3 px-4 rounded-lg transition cursor-pointer shadow-lg shadow-orange-900/40">
+                                Send Message
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div> <!-- End Main View -->
+
+    <!-- Turf Details Page (Hidden by default) -->
+    <div id="detail-view" class="hidden min-h-screen bg-black text-gray-100 pb-20">
+        <!-- Details content injected by JS -->
+    </div>
+
+    <!-- Booking Success Page (Hidden by default) -->
+    <div id="success-view" class="hidden min-h-screen bg-black flex items-center justify-center p-4">
+        <div class="bg-gray-900 border border-orange-900/30 rounded-2xl shadow-2xl p-8 max-w-2xl w-full text-center relative overflow-hidden">
+            <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-orange-600 to-yellow-500"></div>
+            <div class="w-24 h-24 bg-green-900/30 rounded-full flex items-center justify-center mx-auto mb-6">
+                <i class="fas fa-check text-4xl text-green-500"></i>
+            </div>
+            <h2 class="text-4xl font-bold text-white mb-2">Booking Confirmed!</h2>
+            <p class="text-gray-400 mb-8">Your turf has been successfully booked.</p>
+            
+            <div class="bg-black/50 rounded-xl p-6 mb-8 text-left border border-gray-800">
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <p class="text-xs text-gray-500 uppercase tracking-wider">Turf Name</p>
+                        <p class="font-bold text-lg text-orange-500" id="success-turf-name">Mumbai Arena</p>
+                    </div>
+                    <div>
+                        <p class="text-xs text-gray-500 uppercase tracking-wider">Booking ID</p>
+                        <p class="font-bold text-lg text-white">#FS-<span id="success-id">8291</span></p>
+                    </div>
+                    <div>
+                        <p class="text-xs text-gray-500 uppercase tracking-wider">Date</p>
+                        <p class="font-bold text-white" id="success-date">Oct 12, 2023</p>
+                    </div>
+                    <div>
+                        <p class="text-xs text-gray-500 uppercase tracking-wider">Time</p>
+                        <p class="font-bold text-white" id="success-time">06:00 PM</p>
+                    </div>
+                    <div class="col-span-2 pt-4 border-t border-gray-800">
+                        <p class="text-xs text-gray-500 uppercase tracking-wider">Total Amount</p>
+                        <p class="font-bold text-2xl text-white">₹<span id="success-price">1500</span></p>
+                        <p class="text-xs text-green-500 mt-1"><i class="fas fa-check-circle"></i> Payment to be made at venue</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <button onclick="showMainView()" class="px-8 py-3 bg-gray-800 hover:bg-gray-700 text-white rounded-lg font-bold transition">
+                    Back to Home
+                </button>
+                <button onclick="window.print()" class="px-8 py-3 bg-orange-600 hover:bg-orange-500 text-white rounded-lg font-bold transition shadow-lg shadow-orange-900/30">
+                    Download Receipt
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Toast -->
+    <div id="successToast" class="fixed bottom-5 right-5 bg-orange-600 text-white px-6 py-4 rounded-lg shadow-2xl transform translate-y-40 transition-transform duration-300 flex items-center gap-3 z-50 border border-orange-400">
+        <i class="fas fa-check-circle text-2xl"></i>
+        <div>
+            <h4 class="font-bold text-lg">Booking Confirmed!</h4>
+            <p class="text-sm text-orange-100">See you on the field.</p>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-black text-white pt-16 pb-8 border-t border-gray-900">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-10 mb-10">
+                <div>
+                    <h3 class="text-2xl font-bold mb-4 flex items-center gap-2"><i class="fas fa-futbol text-orange-500"></i> Football Saga</h3>
+                    <p class="text-gray-500">Connecting players with the best grounds in Mumbai. Play anytime, anywhere.</p>
+                    <div class="mt-6 flex space-x-4">
+                        <a href="#" class="w-10 h-10 rounded-full bg-gray-900 flex items-center justify-center text-gray-400 hover:text-orange-500 hover:bg-gray-800 transition"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-gray-900 flex items-center justify-center text-gray-400 hover:text-orange-500 hover:bg-gray-800 transition"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-gray-900 flex items-center justify-center text-gray-400 hover:text-orange-500 hover:bg-gray-800 transition"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="text-lg font-bold mb-6 text-white border-b-2 border-orange-500 inline-block pb-1">Quick Links</h4>
+                    <ul class="text-gray-500 space-y-3">
+                        <li><a href="#home" class="hover:text-orange-500 transition flex items-center"><i class="fas fa-chevron-right text-xs mr-2 text-orange-900"></i> Home</a></li>
+                        <li><a href="#turfs" class="hover:text-orange-500 transition flex items-center"><i class="fas fa-chevron-right text-xs mr-2 text-orange-900"></i> Find Turfs</a></li>
+                        <li><a href="#about" class="hover:text-orange-500 transition flex items-center"><i class="fas fa-chevron-right text-xs mr-2 text-orange-900"></i> About Us</a></li>
+                        <li><a href="#contact" class="hover:text-orange-500 transition flex items-center"><i class="fas fa-chevron-right text-xs mr-2 text-orange-900"></i> Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-bold mb-6 text-white border-b-2 border-orange-500 inline-block pb-1">Newsletter</h4>
+                    <p class="text-gray-500 mb-4">Subscribe for updates and offers.</p>
+                    <div class="flex">
+                        <input type="email" placeholder="Email Address" class="bg-gray-900 border border-gray-800 text-white px-4 py-3 rounded-l-lg focus:outline-none focus:border-orange-500 w-full transition-colors">
+                        <button class="bg-orange-600 hover:bg-orange-500 px-4 py-3 rounded-r-lg text-white font-bold transition">Join</button>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-900 pt-8 text-center text-gray-600 text-sm flex flex-col md:flex-row justify-between items-center">
+                <p>&copy; 2023 Football Saga Mumbai. All rights reserved.</p>
+                <p class="mt-2 md:mt-0">Made with <i class="fas fa-heart text-orange-500 mx-1"></i> for Sports</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Data for Turfs in Mumbai
+        const turfs = [
+            {
+                id: 1,
+                name: "Mumbai Arena",
+                location: "Bandra",
+                address: "Turner Road, Bandra West, Mumbai",
+                sport: "Football",
+                price: 1500,
+                rating: 4.8,
+                image: "https://images.unsplash.com/photo-1524012431247-53c4ca0036da?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+                images: [
+                    "https://images.unsplash.com/photo-1524012431247-53c4ca0036da?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+                    "https://images.unsplash.com/photo-1529900748604-07564a03e7a6?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+                    "https://images.unsplash.com/photo-1517466787929-bc90951d0974?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+                    "https://images.unsplash.com/photo-1489944440615-453fc2b6a9a9?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
+                ],
+                features: ["Floodlights", "Changing Rooms", "Parking", "FIFA Quality Turf"]
+            },
+            {
+                id: 2,
+                name: "Kickoff Turf",
+                location: "Andheri",
+                address: "Veera Desai Road, Andheri West, Mumbai",
+                sport: "Football",
+                price: 1200,
+                rating: 4.5,
+                image: "https://images.unsplash.com/photo-1575361204480-aadea25e6e68?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+                images: [
+                    "https://images.unsplash.com/photo-1575361204480-aadea25e6e68?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+                    "https://images.unsplash.com/photo-1560272564-c83b66b1ad12?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+                    "https://images.unsplash.com/photo-1551958219-acbc608c6377?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
+                ],
+                features: ["Water", "Seating", "Equipment Rental", "Tournament Ready"]
+            },
+            {
+                id: 3,
+                name: "Goal Plaza",
+                location: "Dadar",
+                address: "Shivaji Park, Dadar West, Mumbai",
+                sport: "Cricket",
+                price: 1800,
+                rating: 4.9,
+                image: "https://images.unsplash.com/photo-1531415074968-036ba1b575da?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+                images: [
+                    "https://images.unsplash.com/photo-1531415074968-036ba1b575da?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+                    "https://images.unsplash.com/photo-1593341646261-7299a4c52f61?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+                    "https://images.unsplash.com/photo-1624526267942-ab0ff8a3e972?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
+                ],
+                features: ["Floodlights", "Pro Pitch", "Coach Available", "Live Streaming"]
+            },
+            {
+                id: 4,
+                name: "Urban Sports",
+                location: "Powai",
+                address: "Hiranandani Gardens, Powai, Mumbai",
+                sport: "Football",
+                price: 2000,
+                rating: 4.7,
+                image: "https://images.unsplash.com/photo-1431324155629-1a6deb1dec8d?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+                images: [
+                    "https://images.unsplash.com/photo-1431324155629-1a6deb1dec8d?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+                    "https://images.unsplash.com/photo-1517927033932-b3d18e61fb3a?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+                    "https://images.unsplash.com/photo-1550807062-a270f2f36f6d?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
+                ],
+                features: ["Cafeteria", "Showers", "Parking", "AC Lounge"]
+            },
+            {
+                id: 5,
+                name: "Juhu Beach Turf",
+                location: "Juhu",
+                address: "Near Ramada Plaza, Juhu, Mumbai",
+                sport: "Football",
+                price: 2500,
+                rating: 4.6,
+                image: "https://images.unsplash.com/photo-1508098682722-e99c43a406b2?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+                images: [
+                    "https://images.unsplash.com/photo-1508098682722-e99c43a406b2?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+                    "https://images.unsplash.com/photo-1574629810360-7efbbe195018?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+                    "https://images.unsplash.com/photo-1629814484968-3e47a97262c5?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
+                ],
+                features: ["Sea View", "Breeze", "Events", "Night Matches"]
+            },
+            {
+                id: 6,
+                name: "Colaba Sports Complex",
+                location: "Colaba",
+                address: "Cuffe Parade, Colaba, Mumbai",
+                sport: "Cricket",
+                price: 2200,
+                rating: 4.4,
+                image: "https://images.unsplash.com/photo-1593341646261-7299a4c52f61?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+                images: [
+                    "https://images.unsplash.com/photo-1593341646261-7299a4c52f61?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+                    "https://images.unsplash.com/photo-1626248921827-31952e805524?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+                    "https://images.unsplash.com/photo-1562077772-3bd305261997?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
+                ],
+                features: ["Historic Area", "Premium Grass", "Member Lounge", "Locker Room"]
+            }
+        ];
+
+        // State variables
+        let currentTurfs = [...turfs];
+        let selectedTurf = null;
+        let selectedSlotTime = null;
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            renderTurfs(currentTurfs);
+        });
+
+        // Navigation Functions
+        function showMainView() {
+            document.getElementById('main-view').classList.remove('hidden');
+            document.getElementById('detail-view').classList.add('hidden');
+            document.getElementById('success-view').classList.add('hidden');
+            window.scrollTo(0, 0);
+        }
+
+        function scrollToTurfs() {
+            document.getElementById('turfs').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function renderTurfs(turfList) {
+            const container = document.getElementById('turf-container');
+            if (!container) return;
+            container.innerHTML = '';
+
+            if (turfList.length === 0) {
+                container.innerHTML = '<div class="col-span-3 text-center py-10"><p class="text-xl text-gray-500">No turfs found matching your criteria.</p></div>';
+                return;
+            }
+
+            turfList.forEach(turf => {
+                const card = document.createElement('div');
+                card.className = 'turf-card bg-gray-900 rounded-xl shadow-lg overflow-hidden transition-all duration-300 border border-gray-800 flex flex-col h-full hover:shadow-orange-900/20';
+                
+                const featuresHtml = turf.features.slice(0, 2).map(f => 
+                    `<span class="text-xs bg-gray-800 text-gray-400 px-2 py-1 rounded-full mr-1 border border-gray-700">${f}</span>`
+                ).join('');
+
+                card.innerHTML = `
+                    <div class="h-48 overflow-hidden relative group">
+                        <img src="${turf.image}" alt="${turf.name}" class="w-full h-full object-cover opacity-90 group-hover:opacity-100 group-hover:scale-105 transition duration-500">
+                        <div class="absolute top-4 right-4 bg-black/80 backdrop-blur-sm px-3 py-1 rounded-lg text-sm font-bold text-orange-500 shadow-sm border border-orange-500/30">
+                            ₹${turf.price}/hr
+                        </div>
+                        <div class="absolute bottom-4 left-4 bg-black/80 backdrop-blur-sm px-2 py-1 rounded text-xs text-white flex items-center">
+                            <i class="fas fa-star text-yellow-400 mr-1"></i> ${turf.rating}
+                        </div>
+                    </div>
+                    <div class="p-6 flex-grow flex flex-col justify-between">
+                        <div>
+                            <div class="flex justify-between items-start mb-2">
+                                <div>
+                                    <h3 class="font-bold text-xl text-white mb-1">${turf.name}</h3>
+                                    <p class="text-gray-400 text-sm"><i class="fas fa-map-marker-alt mr-1 text-orange-500"></i> ${turf.location}</p>
+                                </div>
+                                <span class="bg-gray-800 text-orange-400 text-xs px-2 py-1 rounded-full font-semibold uppercase tracking-wide border border-gray-700">${turf.sport}</span>
+                            </div>
+                            <p class="text-gray-500 text-sm mb-4 truncate">${turf.address}</p>
+                            <div class="mb-4">
+                                ${featuresHtml}
+                                <span class="text-xs text-gray-600">+ ${turf.features.length - 2} more</span>
+                            </div>
+                        </div>
+                        <button onclick="openTurfDetails(${turf.id})" class="cursor-pointer w-full bg-orange-600 hover:bg-orange-500 text-white font-bold py-3 px-4 rounded-lg transition duration-200 flex items-center justify-center gap-2 mt-auto shadow-lg shadow-orange-900/20">
+                            View Details & Book <i class="fas fa-arrow-right text-sm"></i>
+                        </button>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function filterTurfs() {
+            const loc = document.getElementById('locationFilter').value;
+            const sport = document.getElementById('sportFilter').value;
+
+            currentTurfs = turfs.filter(t => {
+                const matchLoc = loc === 'all' || t.location === loc;
+                const matchSport = sport === 'all' || t.sport === sport;
+                return matchLoc && matchSport;
+            });
+
+            renderTurfs(currentTurfs);
+        }
+
+        function openTurfDetails(id) {
+            selectedTurf = turfs.find(t => t.id === id);
+            if (!selectedTurf) return;
+
+            // Hide Main, Show Details
+            document.getElementById('main-view').classList.add('hidden');
+            document.getElementById('detail-view').classList.remove('hidden');
+            window.scrollTo(0,0);
+
+            // Populate Detail Page
+            const detailContainer = document.getElementById('detail-view');
+            
+            // Image Gallery HTML
+            const galleryHtml = selectedTurf.images.map((img, index) => 
+                `<div class="h-64 ${index === 0 ? 'md:col-span-2 md:h-96' : ''} overflow-hidden rounded-xl border border-gray-800 relative">
+                    <img src="${img}" class="w-full h-full object-cover hover:scale-110 transition duration-700">
+                </div>`
+            ).join('');
+
+            // Features List
+            const featuresList = selectedTurf.features.map(f => 
+                `<li class="flex items-center text-gray-300 mb-2">
+                    <i class="fas fa-check-circle text-orange-500 mr-3"></i> ${f}
+                </li>`
+            ).join('');
+
+            detailContainer.innerHTML = `
+                <div class="container mx-auto px-6 py-10">
+                    <!-- Breadcrumb -->
+                    <div class="flex items-center text-sm text-gray-500 mb-6">
+                        <span onclick="showMainView()" class="cursor-pointer hover:text-orange-500"><i class="fas fa-home"></i> Home</span>
+                        <span class="mx-2">/</span>
+                        <span class="text-gray-300">Details</span>
+                        <span class="mx-2">/</span>
+                        <span class="text-orange-500">${selectedTurf.name}</span>
+                    </div>
+
+                    <!-- Header -->
+                    <div class="flex flex-col md:flex-row justify-between items-start mb-8">
+                        <div>
+                            <h1 class="text-4xl font-bold text-white mb-2">${selectedTurf.name}</h1>
+                            <p class="text-xl text-gray-400"><i class="fas fa-map-marker-alt text-orange-500 mr-2"></i> ${selectedTurf.location}</p>
+                        </div>
+                        <div class="mt-4 md:mt-0 flex flex-col items-end">
+                             <div class="text-3xl font-bold text-orange-500">₹${selectedTurf.price}<span class="text-sm text-gray-500 font-normal">/hour</span></div>
+                             <div class="text-yellow-400 mt-1"><i class="fas fa-star"></i> ${selectedTurf.rating} (120+ Reviews)</div>
+                        </div>
+                    </div>
+
+                    <!-- Gallery -->
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-12">
+                        ${galleryHtml}
+                    </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
+                        <!-- Info Column -->
+                        <div class="lg:col-span-2">
+                            <div class="bg-gray-900 rounded-xl p-8 border border-gray-800 mb-8">
+                                <h2 class="text-2xl font-bold text-white mb-6">About the Turf</h2>
+                                <p class="text-gray-400 leading-relaxed mb-6">
+                                    Experience premium quality sports at ${selectedTurf.name}. Located in the heart of ${selectedTurf.location}, 
+                                    this turf offers state-of-the-art facilities for ${selectedTurf.sport} enthusiasts. 
+                                    Perfect for 5v5 or 7v7 matches, corporate events, and tournaments.
+                                    Maintained daily to ensure professional standards.
+                                </p>
+                                <h3 class="text-xl font-bold text-white mb-4">Amenities</h3>
+                                <ul class="grid grid-cols-1 md:grid-cols-2 gap-2">
+                                    ${featuresList}
+                                </ul>
+                            </div>
+
+                            <div class="bg-gray-900 rounded-xl p-8 border border-gray-800">
+                                <h2 class="text-2xl font-bold text-white mb-6">Rules & Regulations</h2>
+                                <ul class="space-y-3 text-gray-400">
+                                    <li><i class="fas fa-exclamation-circle text-gray-600 mr-2"></i> Studs are not allowed, only turf shoes or trainers.</li>
+                                    <li><i class="fas fa-exclamation-circle text-gray-600 mr-2"></i> Please arrive 15 minutes before your slot.</li>
+                                    <li><i class="fas fa-exclamation-circle text-gray-600 mr-2"></i> Smoking and drinking are strictly prohibited on premises.</li>
+                                    <li><i class="fas fa-exclamation-circle text-gray-600 mr-2"></i> Management is not responsible for lost valuables.</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Booking Widget Column -->
+                        <div class="lg:col-span-1">
+                            <div class="bg-gray-900 rounded-xl p-6 border border-orange-900/30 shadow-2xl sticky top-24">
+                                <h3 class="text-2xl font-bold text-white mb-6 border-b border-gray-800 pb-4">Book Your Slot</h3>
+                                
+                                <form id="bookingForm" onsubmit="handleBooking(event)">
+                                    <div class="mb-5">
+                                        <label class="block text-gray-400 text-sm font-bold mb-2">Select Date</label>
+                                        <input type="date" id="bookingDate" required class="w-full bg-black border border-gray-700 rounded-lg py-3 px-4 text-white focus:outline-none focus:border-orange-500 transition-colors" style="color-scheme: dark;">
+                                    </div>
+
+                                    <div class="mb-5">
+                                        <label class="block text-gray-400 text-sm font-bold mb-2">Available Slots</label>
+                                        <div id="slotsContainer" class="grid grid-cols-3 gap-2 h-64 overflow-y-auto slots-container p-2 border border-gray-700 rounded-lg bg-black">
+                                            <p class="col-span-3 text-center text-gray-500 py-10 flex flex-col items-center justify-center h-full">
+                                                <i class="far fa-calendar-alt text-3xl mb-3 text-gray-700"></i>
+                                                Select a date first
+                                            </p>
+                                        </div>
+                                        <input type="hidden" id="selectedSlot" required>
+                                    </div>
+                                    
+                                    <div class="mb-5">
+                                        <label class="block text-gray-400 text-sm font-bold mb-2">Your Name</label>
+                                        <input type="text" id="customerName" required class="w-full bg-black border border-gray-700 rounded-lg py-3 px-4 text-white focus:outline-none focus:border-orange-500 transition-colors" placeholder="e.g. Rahul Sharma">
+                                    </div>
+                                    
+                                    <div class="mb-6">
+                                        <label class="block text-gray-400 text-sm font-bold mb-2">Phone Number</label>
+                                        <input type="tel" id="customerPhone" required class="w-full bg-black border border-gray-700 rounded-lg py-3 px-4 text-white focus:outline-none focus:border-orange-500 transition-colors" placeholder="e.g. 9876543210">
+                                    </div>
+
+                                    <button type="submit" class="w-full bg-orange-600 hover:bg-orange-500 text-white font-bold py-4 px-4 rounded-lg transition shadow-lg shadow-orange-900/40 text-lg">
+                                        Confirm Booking
+                                    </button>
+                                    <p class="text-xs text-center text-gray-500 mt-4"><i class="fas fa-lock"></i> Secure booking. Pay at venue.</p>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            // Re-attach date listener
+            const today = new Date().toISOString().split('T')[0];
+            const bookingDateInput = document.getElementById('bookingDate');
+            if(bookingDateInput) {
+                bookingDateInput.setAttribute('min', today);
+                bookingDateInput.addEventListener('change', generateSlots);
+            }
+            // Reset state
+            selectedSlotTime = null;
+        }
+
+        function generateSlots() {
+            const dateVal = document.getElementById('bookingDate').value;
+            const container = document.getElementById('slotsContainer');
+            
+            if (!dateVal) return;
+
+            container.innerHTML = '';
+            
+            // Mock available slots (7 AM to 11 PM) - Expanded hours for "more pages" feel
+            const startHour = 7;
+            const endHour = 23;
+            
+            const now = new Date();
+            const selectedDate = new Date(dateVal);
+            const isToday = selectedDate.getDate() === now.getDate() && 
+                            selectedDate.getMonth() === now.getMonth() && 
+                            selectedDate.getFullYear() === now.getFullYear();
+            const currentHour = now.getHours();
+
+            for (let i = startHour; i < endHour; i++) {
+                if (isToday && i <= currentHour) continue;
+
+                const timeLabel = `${i > 12 ? i - 12 : i}:00 ${i >= 12 ? 'PM' : 'AM'}`;
+                const isBooked = Math.random() < 0.4; 
+                
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                btn.className = isBooked 
+                    ? 'p-2 rounded border border-gray-800 bg-gray-900 text-gray-700 cursor-not-allowed text-xs font-medium'
+                    : 'p-2 rounded border border-gray-700 hover:border-orange-500 hover:bg-orange-900/20 text-gray-300 hover:text-orange-500 font-medium text-xs transition slot-btn cursor-pointer bg-black';
+                btn.innerText = timeLabel;
+                btn.disabled = isBooked;
+                
+                if (!isBooked) {
+                    btn.onclick = function() {
+                        document.querySelectorAll('.slot-btn').forEach(b => {
+                            if(!b.disabled) {
+                                b.className = 'p-2 rounded border border-gray-700 hover:border-orange-500 hover:bg-orange-900/20 text-gray-300 hover:text-orange-500 font-medium text-xs transition slot-btn cursor-pointer bg-black';
+                            }
+                        });
+                        this.className = 'p-2 rounded border border-orange-500 bg-orange-600 text-white font-bold text-xs transition slot-btn cursor-pointer shadow-lg shadow-orange-900/50';
+                        
+                        selectedSlotTime = timeLabel;
+                        document.getElementById('selectedSlot').value = timeLabel;
+                    };
+                }
+                
+                container.appendChild(btn);
+            }
+
+            if (container.children.length === 0) {
+                container.innerHTML = '<p class="col-span-3 text-center text-red-400 py-4">No slots available for this date.</p>';
+            }
+        }
+
+        function handleBooking(e) {
+            e.preventDefault();
+            
+            if (!selectedSlotTime) {
+                alert('Please select a time slot');
+                return;
+            }
+
+            const name = document.getElementById('customerName').value;
+            const date = document.getElementById('bookingDate').value;
+            const phone = document.getElementById('customerPhone').value;
+
+            if(!name || !date || !phone) return;
+
+            const btn = e.target.querySelector('button[type="submit"]');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+            btn.disabled = true;
+
+            setTimeout(() => {
+                // Populate Success Page Data
+                document.getElementById('success-turf-name').innerText = selectedTurf.name;
+                document.getElementById('success-date').innerText = new Date(date).toDateString();
+                document.getElementById('success-time').innerText = selectedSlotTime;
+                document.getElementById('success-price').innerText = selectedTurf.price;
+                document.getElementById('success-id').innerText = Math.floor(1000 + Math.random() * 9000);
+
+                // Show Success Page
+                document.getElementById('detail-view').classList.add('hidden');
+                document.getElementById('success-view').classList.remove('hidden');
+                
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+                
+                showToast();
+            }, 1500);
+        }
+
+        function showToast() {
+            const toast = document.getElementById('successToast');
+            toast.classList.remove('translate-y-40');
+            setTimeout(() => {
+                toast.classList.add('translate-y-40');
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
