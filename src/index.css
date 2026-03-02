@@ -1,0 +1,39 @@
+﻿@import "tailwindcss";
+
+@theme {
+  --font-sans: "Poppins", sans-serif;
+}
+
+body {
+  scroll-behavior: smooth;
+}
+
+.turf-card:hover {
+  transform: translateY(-5px);
+}
+
+/* Custom scrollbar for booking slots */
+.slots-container::-webkit-scrollbar {
+  width: 6px;
+}
+.slots-container::-webkit-scrollbar-track {
+  background: #374151;
+}
+.slots-container::-webkit-scrollbar-thumb {
+  background: #f97316;
+  border-radius: 3px;
+}
+.slots-container::-webkit-scrollbar-thumb:hover {
+  background: #ea580c;
+}
+
+/* Dark mode overrides for select dropdown arrow */
+select {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%239ca3af' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+  background-position: right 0.5rem center;
+  background-repeat: no-repeat;
+  background-size: 1.5em 1.5em;
+  padding-right: 2.5rem;
+  -webkit-appearance: none;
+  appearance: none;
+}
