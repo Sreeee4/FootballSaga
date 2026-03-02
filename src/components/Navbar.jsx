@@ -15,7 +15,7 @@ const Navbar = ({ onNavigate }) => {
                     className="flex items-center space-x-2 cursor-pointer"
                     onClick={() => handleNavClick('home')}
                 >
-                    <img src="/LOGO.png" alt="Football Saga" className="h-[75px] w-auto" />
+                    <img src="./LOGO.png" alt="Football Saga" className="h-[75px] w-auto" />
                 </div>
 
                 <div className="hidden md:flex space-x-8">

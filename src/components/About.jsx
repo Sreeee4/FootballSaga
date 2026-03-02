@@ -8,7 +8,7 @@ const About = () => {
                     <div className="w-full md:w-1/2">
                         <div className="relative">
                             <div className="absolute -inset-2 bg-orange-500 rounded-lg opacity-20 blur-lg"></div>
-                            <img src="/IMG_9315.JPG" alt="About Football Saga" className="relative rounded-lg shadow-2xl w-full border border-gray-700" />
+                            <img src="./IMG_9315.JPG" alt="About Football Saga" className="relative rounded-lg shadow-2xl w-full border border-gray-700" />
                         </div>
                     </div>
                     <div className="w-full md:w-1/2">
